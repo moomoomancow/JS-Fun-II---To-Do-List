@@ -1,12 +1,17 @@
+const input = document.querySelector('#input')
+const HTML_todo = document.querySelector("#to-do-list")
+const HTML_completed = document.querySelector('#completed-list')
 
-var htmlList = document.querySelector("#list");
-var completed_list = document.querySelector("#completed-list")
-let btn = document.querySelector('#submit');
+
+var arr_todo = [];
+var arr_completed = [];
 
 
-btn.addEventListener('click', () => {
-  let to_add = document.querySelector("#input").value;
+
+function add_todo() {
   let entry = document.createElement("li");
+
+  entry.appendChild(document.createTextNode(input.value));
 
   entry.addEventListener('click', () => {
     if(entry.style.textDecoration == "line-through"){
@@ -15,19 +20,48 @@ btn.addEventListener('click', () => {
     entry.style.textDecoration = "line-through";
     }
   });
-    entry.addEventListener('auxclick', () => {
-      htmlList.removeChild(entry);
-      completed_list.appendChild(entry);
-  })
 
 
-  entry.appendChild(document.createTextNode(to_add));
-  htmlList.appendChild(entry);
+  entry.addEventListener('auxclick', () => {
+    let index;
+    if(arr_todo.includes(entry)) {
+      index = arr_todo.indexOf(entry);
+      arr_completed.push(arr_todo[index]);
+      arr_todo = removeIndex(arr_todo, index);
+    }
+    else {
+      index = arr_completed.indexOf(entry);
+      arr_todo.push(arr_completed[index]);
+      arr_completed = removeIndex(arr_completed, index);
+
+    }
+    update();
+  });
+
+  arr_todo.push(entry)
+  update();
   input.value = ''
-})
-
-localStorage.setItem(htmlList)
-existingEntry = localStorage.getItem(htmlList);
+}
 
 
-// list_items.push(to_add);
+function removeIndex(arr, index) {
+  let temp = [];
+  for(let i = 0; i < arr.length; i++) {
+    if(i != index) {
+      temp.push(arr[i])
+    }
+  }
+  return temp;
+}
+
+
+function update() {
+
+  HTML_todo.innerHTML = "";
+  for(let item of arr_todo) {
+    HTML_todo.appendChild(item);
+  }
+  for(let item of arr_completed) {
+    HTML_completed.appendChild(item);
+  }
+}

@@ -1,5 +1,5 @@
 
-var htmlList = document.querySelector("#list");
+var htmlList = document.querySelector("#to-do-list");
 var completed_list = document.querySelector("#completed-list")
 let btn = document.querySelector('#submit');
 
