@@ -1,3 +1,16 @@
+body {
+  display: flex;
+  justify-content: space-around;
+  background-color: green;
+}
+
+div {
+  background-color: white;
+  border: solid black;
+  padding: 15px;
+}
+
+
 h1 {
   color: purple;
 }
